@@ -1,4 +1,5 @@
 const express = require("express");
+const { v4: uuidv4 } = require("uuid");
 const app = express();
 
 app.use(express.json());
@@ -35,6 +36,26 @@ app.get("/api/persons", (request, response) => {
   response.json(persons);
 });
 
+app.post("/api/persons", (req, res) => {
+  const body = req.body;
+
+  if (!body.name || !body.number) {
+    return res.status(400).json({
+      error: "name or number missing",
+    });
+  }
+
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: uuidv4()
+  }
+
+  persons = persons.concat(person)
+
+  res.json(person)
+});
+
 app.get("/api/persons/:id", (request, response) => {
   const id = request.params.id;
   const person = persons.find(p => p.id === id);
@@ -55,3 +76,4 @@ app.get("/api/info", (req, res) => {
   const date = new Date().toString();
   res.send(`<p>Phonebook has info for ${persons.length} people</p><p>${date}</p>`)
 })
+
