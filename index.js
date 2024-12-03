@@ -1,8 +1,10 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
-const app = express();
+const morgan = require("morgan");
 
+const app = express();
 app.use(express.json());
+app.use(morgan("tiny"));
 
 const PORT = 3001;
 app.listen(PORT, () => {
