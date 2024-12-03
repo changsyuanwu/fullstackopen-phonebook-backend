@@ -34,3 +34,9 @@ let persons = [
 app.get("/api/persons", (request, response) => {
   response.json(persons);
 });
+
+app.get("/api/info", (req, res) => {
+  console.log(req.headers);
+  const date = new Date().toString();
+  res.send(`<p>Phonebook has info for ${persons.length} people</p><p>${date}</p>`)
+})
