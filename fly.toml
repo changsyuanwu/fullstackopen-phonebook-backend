@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for fullstackopen-phonebook-backend-chang on 2024-12-03T15:41:49+08:00
+# fly.toml app configuration file generated for fullstackopen-phonebook-chang on 2024-12-04T08:49:13+08:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -9,7 +9,7 @@ primary_region = 'hkg'
 [build]
 
 [env]
-  PORT = "3000" # add this
+  PORT = '3000'
 
 [http_service]
   internal_port = 3000
