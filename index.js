@@ -38,12 +38,6 @@ app.post("/api/persons", (req, res) => {
     });
   }
 
-  // if (Person.findOne({ name: body.name }).exec()) {
-  //   return res.status(400).json({
-  //     error: "name must be unique",
-  //   });
-  // }
-
   const person = new Person({
     name: body.name,
     number: body.number
@@ -73,6 +67,22 @@ app.delete("/api/persons/:id", (req, res, next) => {
     .catch((err) => next(err));
 });
 
+app.put("/api/persons/:id", (req, res, next) => {
+  const id = req.params.id;
+
+  const body = req.body;
+  const person = {
+    name: body.name,
+    number: body.number,
+  };
+
+  Person.findByIdAndUpdate(id, person, { new: true })
+    .then((updatedNote) => {
+      res.json(updatedNote);
+    })
+    .catch(err => next(err));
+})
+
 app.get("/api/info", (req, res) => {
   const date = new Date().toString();
   res.send(
@@ -86,7 +96,7 @@ const errorHandler = (err, req, res, next) => {
   if (err.name === "CastError") {
     return res.status(400).send({ error: "malformatted id" });
   }
-  
+
   next(err);
 };
 // this has to be the last loaded middleware, also all the routes should be registered before this!
