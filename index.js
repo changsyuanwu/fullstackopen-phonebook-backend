@@ -43,9 +43,12 @@ app.post("/api/persons", (req, res) => {
     number: body.number
   });
 
-  person.save().then((result) => {
-    console.log(`added ${result.name} number ${result.number} to phonebook`);
-  });
+  person
+    .save()
+    .then((result) => {
+      console.log(`added ${result.name} number ${result.number} to phonebook`);
+    })
+    .catch((err) => next(err));
 });
 
 app.get("/api/persons/:id", (req, res, next) => {
@@ -85,9 +88,13 @@ app.put("/api/persons/:id", (req, res, next) => {
 
 app.get("/api/info", (req, res) => {
   const date = new Date().toString();
-  res.send(
-    `<p>Phonebook has info for ${persons.length} people</p><p>${date}</p>`
-  );
+  Person.find({})
+    .then((persons) => {
+      res.send(
+        `<p>Phonebook has info for ${persons.length} people</p><p>${date}</p>`
+      );
+    })
+    .catch((err) => next(err));
 });
 
 const errorHandler = (err, req, res, next) => {
